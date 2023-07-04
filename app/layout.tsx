@@ -1,3 +1,4 @@
+import DashBoard from "./components/dashboard";
 import Nav from "./components/nav/nav/nav";
 import "./globals.css";
 import Head from "next/head";
@@ -17,9 +18,11 @@ export default function RootLayout({
           type="image/x-icon"
         />
       </Head>
-      <main className="flex min-w-[100vw] min-h-[100vh]">
+      <main className={`flex min-w-[100vw] min-h-[100vh]`}>
         <Nav />
-        <main>{children}</main>
+        <main>
+          <DashBoard />
+        </main>
       </main>
     </>
   );
