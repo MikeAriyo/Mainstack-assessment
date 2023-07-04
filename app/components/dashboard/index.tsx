@@ -1,19 +1,20 @@
 import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
+import style from "../../styles/sidebar.module.css";
 
 const DashBoard = () => {
   return (
     <>
       <main
         id="Dashboard"
-        className="fixed right-0 top-0 flex flex-col items-center h-[100vh]"
+        className={`fixed right-0 top-0 flex flex-col items-center ${style.sidebar}`}
         style={{ width: "calc(100vw - 304px)" }}
       >
         <div className="flex items-center lg:block w-full p-3 pl-0 backdrop-blur-2xl bg-white">
           <div className="flex items-center ml-3 lg:hidden">
             <Image
               alt={"sidebar icon"}
-              src={"mainstack-logo.svg"}
+              src={"logo.svg"}
               width={50}
               height={20}
             />
