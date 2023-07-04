@@ -1,4 +1,4 @@
-const navLinks = {
+export const navLinks = {
   main: [
     { icon: "box.svg", title: "Dashboard", href: "/dashboard" },
     { icon: "edit.svg", title: "Item 1", href: "#" },

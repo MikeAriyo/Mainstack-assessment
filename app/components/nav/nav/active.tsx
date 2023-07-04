@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 type ActiveLinkProps = {
@@ -9,14 +11,13 @@ type ActiveLinkProps = {
 };
 
 function ActiveLink({ children, href, icon }: ActiveLinkProps) {
-  const router = useRouter();
-  const isActive = router.asPath.includes(href);
+  const currentRoute = usePathname();
 
   return (
     <div
       style={{ borderRadius: "1.8px" }}
       className={`w-full font-bold flex items-center p-2 mb-4 ${
-        isActive
+        currentRoute === href
           ? "font-bold backdrop:text-[#FF5403] border-l-4 border-[#FF5403]"
           : "text-[#56616B]"
       }`}
