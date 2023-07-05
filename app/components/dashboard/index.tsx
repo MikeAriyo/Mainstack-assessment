@@ -4,12 +4,14 @@ import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
 import style from "../../styles/sidebar.module.css";
 import PieChart from "./charts/pieChart/pieChart";
-import { data } from "../../stub/data";
+// import { data } from "../../stub/data";
 import LineChart from "./charts/lineChart";
+import useSWR from "swr";
+import { fetcher } from "../../../pages/api/hello";
 
 const DashBoard = () => {
-  // const { data, error } = useSWR("https://fe-task-api.mainstack.io/", fetcher);
-  //   console.log("data >>>", data);
+  const { data, error } = useSWR("https://fe-task-api.mainstack.io/", fetcher);
+  console.log("data >>>", data);
   return (
     <>
       <main

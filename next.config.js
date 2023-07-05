@@ -1,16 +1,8 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  env: {
-    user: "lucid",
-  },
-
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/dashboard",
-        permanent: true,
-      },
-    ];
+  experimental: {
+    appDir: true,
   },
 };
+
+module.exports = nextConfig;

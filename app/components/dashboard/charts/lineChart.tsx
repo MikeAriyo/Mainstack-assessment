@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
@@ -30,15 +32,21 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      display: false,
     },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
+  },
+  scales: {
+    x: {
+      grid: { display: false },
+    },
+    y: {
+      border: {
+        dash: [4],
+      },
     },
   },
 };
@@ -56,39 +64,6 @@ export const monthNames = [
   "Oct",
   "Nov",
   "Dec",
-];
-
-const noOfDays = [
-  {
-    id: 1,
-    name: "1 day",
-    label: "1d",
-  },
-  {
-    id: 2,
-    name: "3 days",
-    label: "3d",
-  },
-  {
-    id: 3,
-    name: "7 days",
-    label: "7d",
-  },
-  {
-    id: 4,
-    name: "30 days",
-    label: "30d",
-  },
-  {
-    id: 5,
-    name: "All Time",
-    label: "all",
-  },
-  {
-    id: 6,
-    name: "Custom Date",
-    label: "custom",
-  },
 ];
 
 const generateData = (array: any[], noOfDays: number) => {
@@ -111,6 +86,34 @@ const generateData = (array: any[], noOfDays: number) => {
   };
 };
 
+const noOfDays = [
+  {
+    id: 1,
+    name: "1 day",
+    label: "1d",
+  },
+  {
+    id: 2,
+    name: "3 days",
+    label: "3d",
+  },
+  {
+    id: 3,
+    name: "7 days",
+    label: "7d",
+  },
+  {
+    id: 4,
+    name: "30 days",
+    label: "30d",
+  },
+];
+
+interface IChartData {
+  labels: any;
+  numberOfData: any;
+}
+
 const LineChart = () => {
   let active = false;
 
@@ -125,16 +128,22 @@ const LineChart = () => {
     },
   ]);
 
-  const chartGeneratedData: any = {
-    "1d": generateData(fetchedData, 1),
-    "3d": generateData(fetchedData, 3),
-    "7d": generateData(fetchedData, 7),
-    "30d": generateData(fetchedData, 30),
-  };
+  const [chartGeneratedData, setChartGeneratedData] = useState<any>();
+
+  useEffect(() => {
+    console.log("Hello there!!!");
+    const newChartGeneratedData = {
+      "1d": generateData(fetchedData, 1),
+      "3d": generateData(fetchedData, 3),
+      "7d": generateData(fetchedData, 7),
+      "30d": generateData(fetchedData, 30),
+    };
+    setChartGeneratedData(newChartGeneratedData);
+    setChartData(newChartGeneratedData["1d"]);
+  }, [fetchedData]);
 
   useEffect(() => {
     axios.get("https://fe-task-api.mainstack.io/").then((res: any) => {
-      console.log("Dad", res.data);
       const graphData = res.data?.graph_data?.views;
       let array = [];
       for (let key in graphData) {
@@ -143,16 +152,12 @@ const LineChart = () => {
           data: graphData[key],
         });
       }
-      console.log("Array", array);
       setFetchedData(array);
-      console.log("Generated data", chartGeneratedData["1d"]);
-      setChartData(chartGeneratedData["1d"]);
     });
-  }, []);
+  }, [fetchedData]);
 
   const handleDateChange = (label: string) => {
     const data = chartGeneratedData[label];
-    console.log("Data>>", data);
     setChartData(data);
   };
 
@@ -161,7 +166,7 @@ const LineChart = () => {
     datasets: [
       {
         fill: true,
-        // label: 'Dataset 2',
+        label: "",
         data: chartData?.numberOfData || [],
         borderColor: "#FF5403",
         backgroundColor: (context: any) => {

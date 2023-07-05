@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 type ActiveLinkProps = {
   children: any;
