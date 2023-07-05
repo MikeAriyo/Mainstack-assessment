@@ -16,3 +16,9 @@ export type keys =
   | "30days"
   | "allTime"
   | "payload";
+
+export type resultType = {
+  graph_data: any;
+  top_locations: any[];
+  top_sources: any[];
+};

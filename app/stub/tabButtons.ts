@@ -1,4 +1,4 @@
-const tabButtons = [
+export const tabButtons = [
   { title: "1 Day", duration: "1day" },
   { title: "2 Days", duration: "2days" },
   { title: "7 Days", duration: "7days" },

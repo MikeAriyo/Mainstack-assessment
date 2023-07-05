@@ -1,6 +1,8 @@
 import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
 import style from "../../styles/sidebar.module.css";
+import AllTabs from "./tabs/allTabs";
+import LineChart from "./charts/lineChart";
 
 const DashBoard = () => {
   return (
@@ -26,6 +28,7 @@ const DashBoard = () => {
 
         <div className="dashboard-chart w-full h-[100vh] pb-9 pl-[3rem] pr-[3rem] overflow-y-scroll flex flex-col">
           <DashboardGreeting />
+          <LineChart />
         </div>
       </main>
     </>
