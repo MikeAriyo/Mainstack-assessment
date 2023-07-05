@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const DashboardGreeting = () => {
+  // dynamically get time for greeting text
   const time = new Date().getHours();
   let greeting;
   if (time < 12) {
