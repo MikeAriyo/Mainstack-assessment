@@ -22,3 +22,9 @@ export type resultType = {
   top_locations: any[];
   top_sources: any[];
 };
+
+export interface locationType {
+  country: string;
+  count: number;
+  percent: number;
+}

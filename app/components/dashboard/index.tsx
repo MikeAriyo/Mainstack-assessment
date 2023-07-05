@@ -1,16 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
 import style from "../../styles/sidebar.module.css";
 import AllTabs from "./tabs/allTabs";
 import LineChart from "./charts/lineChart";
-import PieChart from "./charts/pieChart";
+import PieChart from "./charts/pieChart/pieChart";
+import useSWR from "swr";
+import { fetcher } from "../../../pages/api/hello";
+import { data } from "../../stub/data";
 
 const DashBoard = () => {
+  // const { data, error } = useSWR("https://fe-task-api.mainstack.io/", fetcher);
+  console.log("data >>>", data);
   return (
     <>
       <main
         id="Dashboard"
-        className={`fixed right-0 top-0 flex flex-col items-center ${style.sidebar}`}
+        className={`fixed right-0 top-0 flex flex-col items-center h-[100vh] ${style.sidebar}`}
         style={{ width: "calc(100vw - 304px)" }}
       >
         <div className="flex items-center lg:block w-full p-3 pl-0 backdrop-blur-2xl bg-white">
@@ -29,8 +36,11 @@ const DashBoard = () => {
 
         <div className="dashboard-chart w-full h-[100vh] pb-9 pl-[3rem] pr-[3rem] overflow-y-scroll flex flex-col">
           <DashboardGreeting />
-          <LineChart />
-          <PieChart />
+          <div className="mt-8">
+            <LineChart />
+          </div>
+
+          {data ? <PieChart res={data} /> : ""}
         </div>
       </main>
     </>
