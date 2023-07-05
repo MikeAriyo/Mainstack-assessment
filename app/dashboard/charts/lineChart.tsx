@@ -91,21 +91,25 @@ const noOfDays = [
     id: 1,
     name: "1 day",
     label: "1d",
+    active: true,
   },
   {
     id: 2,
     name: "3 days",
     label: "3d",
+    active: false,
   },
   {
     id: 3,
     name: "7 days",
     label: "7d",
+    active: false,
   },
   {
     id: 4,
     name: "30 days",
     label: "30d",
+    active: false,
   },
 ];
 
@@ -114,9 +118,7 @@ interface IChartData {
   numberOfData: any;
 }
 
-const LineChart = () => {
-  let active = false;
-
+const LineChart = ({ graphData }: { graphData: any }) => {
   const [chartData, setChartData] = useState<IChartData>({
     labels: [],
     numberOfData: [],
@@ -127,11 +129,13 @@ const LineChart = () => {
       data: "",
     },
   ]);
+  const [allViews, setAllViews] = useState(0);
 
   const [chartGeneratedData, setChartGeneratedData] = useState<any>();
 
+  const [daysData, setDaysData] = useState(noOfDays);
+
   useEffect(() => {
-    console.log("Hello there!!!");
     const newChartGeneratedData = {
       "1d": generateData(fetchedData, 1),
       "3d": generateData(fetchedData, 3),
@@ -143,22 +147,28 @@ const LineChart = () => {
   }, [fetchedData]);
 
   useEffect(() => {
-    axios.get("https://fe-task-api.mainstack.io/").then((res: any) => {
-      const graphData = res.data?.graph_data?.views;
-      let array = [];
-      for (let key in graphData) {
-        array.push({
-          date: key,
-          data: graphData[key],
-        });
-      }
-      setFetchedData(array);
-    });
-  }, [fetchedData]);
+    let array = [];
+    for (let key in graphData) {
+      array.push({
+        date: key,
+        data: graphData[key],
+      });
+    }
+    setFetchedData(array);
+    const sum = array.map(({ data }) => data).reduce((a, b) => a + b, 0);
+    setAllViews(sum);
+  }, [graphData]);
 
   const handleDateChange = (label: string) => {
     const data = chartGeneratedData[label];
     setChartData(data);
+    const newData = daysData.map((item) => {
+      return {
+        ...item,
+        active: item.label === label ? true : false,
+      };
+    });
+    setDaysData(newData);
   };
 
   const data = {
@@ -192,13 +202,13 @@ const LineChart = () => {
   return (
     <>
       <div className="flex gap-4 p-2 mt-4 mb-4 w-full overflow-x-scroll md:overflow-x-hidden">
-        {noOfDays.map((item) => (
+        {daysData.map((item) => (
           <div key={item.id}>
             <button
               onClick={() => handleDateChange(item.label)}
               className={`min-w-fit p-3 border-[1px] border-[#EFF1F6] text-[14px] text-[#31373D] font-[500] rounded-full 
         ${
-          active ? "text-[#FF5403] bg-[#FFEEE5] border-[#FF5403]" : ""
+          item.active ? "text-[#FF5403] bg-[#FFEEE5] border-[#FF5403]" : ""
         } transition-all`}
             >
               {item?.name}
@@ -224,7 +234,7 @@ const LineChart = () => {
           </div>
         </div>
 
-        <h1 className="font-bold text-[3rem]">500</h1>
+        <h1 className="font-bold text-[3rem]">{allViews}</h1>
 
         <Line options={options} data={data} />
       </div>

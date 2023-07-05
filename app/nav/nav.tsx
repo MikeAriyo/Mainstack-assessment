@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { navLinks } from "../../../stub/navLinks";
+import { navLinks } from "../stub/navLinks";
 import ActiveLink from "./active";
-import { LinkProps } from "../../../types";
-import style from "../../../styles/sidebar.module.css";
+import { LinkProps } from "../types";
+import style from "../styles/sidebar.module.css";
 import LoggedInUser from "./loggedInUser";
 
 const Nav = () => {

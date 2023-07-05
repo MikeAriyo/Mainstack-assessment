@@ -2,16 +2,26 @@
 
 import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
-import style from "../../styles/sidebar.module.css";
+import style from "../styles/sidebar.module.css";
 import PieChart from "./charts/pieChart/pieChart";
 // import { data } from "../../stub/data";
 import LineChart from "./charts/lineChart";
-import useSWR from "swr";
-import { fetcher } from "../../../pages/api/hello";
+import { useEffect, useState } from "react";
+// import { fetcher } from "../../../pages/api/hello";
 
 const DashBoard = () => {
-  const { data, error } = useSWR("https://fe-task-api.mainstack.io/", fetcher);
-  console.log("data >>>", data);
+  const [data, setData] = useState<any>();
+
+  console.log("Hello>>>>");
+  useEffect(() => {
+    fetch("https://fe-task-api.mainstack.io/", {
+      method: "GET",
+    }).then(async (res: any) => {
+      const data = await res.json();
+      setData(data);
+    });
+  }, []);
+
   return (
     <>
       <main
@@ -35,11 +45,18 @@ const DashBoard = () => {
 
         <div className="dashboard-chart w-full h-[100vh] pb-9 pl-[3rem] pr-[3rem] overflow-y-scroll flex flex-col">
           <DashboardGreeting />
-          <div className="mt-8">
-            <LineChart />
+          <div className="">
+            <LineChart graphData={data?.graph_data?.views} />
           </div>
 
-          {data ? <PieChart res={data} /> : ""}
+          {data ? (
+            <PieChart
+              topLocations={data?.top_locations}
+              sources={data?.top_sources}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </main>
     </>
