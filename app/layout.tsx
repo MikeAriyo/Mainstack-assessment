@@ -13,11 +13,7 @@ export default function RootLayout({
     <div className={`${style.sidebar}`}>
       <Head>
         <title>Dashboard | Mainstack</title>
-        <link
-          rel="shortcut icon"
-          href="mainstack-logo.svg"
-          type="image/x-icon"
-        />
+        <link rel="shortcut icon" href="logo.svg" type="image/x-icon" />
       </Head>
       <main className={`flex min-w-[100vw] min-h-[100vh] ${style.sidebar}`}>
         <Nav />
