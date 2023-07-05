@@ -3,16 +3,13 @@
 import Image from "next/image";
 import DashboardGreeting from "./dashboardGreeting";
 import style from "../../styles/sidebar.module.css";
-import AllTabs from "./tabs/allTabs";
-import LineChart from "./charts/lineChart";
 import PieChart from "./charts/pieChart/pieChart";
-import useSWR from "swr";
-import { fetcher } from "../../../pages/api/hello";
 import { data } from "../../stub/data";
+import LineChart from "./charts/lineChart";
 
 const DashBoard = () => {
   // const { data, error } = useSWR("https://fe-task-api.mainstack.io/", fetcher);
-  console.log("data >>>", data);
+  //   console.log("data >>>", data);
   return (
     <>
       <main
